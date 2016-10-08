@@ -14,9 +14,9 @@ curl
 ## Installing
 
 ```
-git clone git@github.com:GuidoBR/restful-experiment.git
-virtualenv venv && source venv/bin/activate
-pip install -r requirements.txt
+$ git clone git@github.com:GuidoBR/restful-experiment.git
+$ virtualenv venv && source venv/bin/activate
+$ pip install -r requirements.txt
 ```
 
 ### Tests
@@ -25,3 +25,7 @@ Run the project's tests.
 
 ```
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
