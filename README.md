@@ -1,7 +1,7 @@
 # restful-experiment
-Restful API for user registration and login. Python, DRF, JWT.
+Restful API for user registration and login. Python, DRF, JWT. Use it on Heroku at [Restful Experiment](https://restful-experiment.herokuapp.com/).
 
-https://restful-experiment.herokuapp.com/
+![Get Token JWT Example](httpie-get-token-example.png)
 
 ## Getting Started
 
