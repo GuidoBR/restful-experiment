@@ -12,7 +12,7 @@ class UserTests(APITestCase):
         """
         Ensure we can create a new user object.
         """
-        url = reverse('users')
+        url = reverse('user', kwargs={'pk': 1})
         data = {
         "name": "Joao da Silva",
         "email": "joao@silva.org",

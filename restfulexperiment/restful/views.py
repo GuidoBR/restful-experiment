@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 from django.shortcuts import render
 from rest_framework import authentication, viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -10,6 +11,7 @@ from restfulexperiment.restful.serializers import UserSerializer
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny, ))
 def user_collection(request):
     if request.method == 'GET':
         users = User.objects.all().order_by('-created')
@@ -17,7 +19,8 @@ def user_collection(request):
         return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
+@permission_classes((AllowAny, ))
 def user_element(request, pk):
     if request.method == 'GET':
         try:
@@ -30,10 +33,10 @@ def user_element(request, pk):
 
     if request.method == 'POST':
         data = {
-                "name": request.DATA.get('name'),
-                "email": request.DATA.get('email'),
-                "password": request.DATA.get('password'),
-                "phones": request.DATA.get('phones'),
+                "name": request.data.get('name'),
+                "email": request.data.get('email'),
+                "password": request.data.get('password'),
+                "phones": request.data.get('phones'),
         }
         serializer = UserSerializer(data=data)
         if serializer.is_valid():
