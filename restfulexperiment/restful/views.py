@@ -21,7 +21,7 @@ def user_collection(request):
 
 @api_view(['GET', 'POST'])
 @permission_classes((AllowAny, ))
-def user_element(request, pk):
+def user_element(request, pk=None):
     if request.method == 'GET':
         try:
                 user = User.objects.get(pk=pk)
