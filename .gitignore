@@ -87,3 +87,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+restfulexperiment/static/
+db.sqlite3
