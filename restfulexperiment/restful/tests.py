@@ -19,12 +19,6 @@ class UserTests(APITestCase):
         "name": "Joao da Silva",
         "email": "joao@silva.org",
         "password": "hunter2",
-        "phones": [
-            {
-                "number": "987654321",
-                "ddd": "21"
-                }
-            ]
         }
 
 
@@ -43,12 +37,6 @@ class UserTests(APITestCase):
         "name": "Joao da Silva",
         "email": "joao@silva.org",
         "password": "hunter2",
-        "phones": [
-            {
-                "number": "987654321",
-                "ddd": "21"
-                }
-            ]
         }
 
         today = datetime.date.today()
