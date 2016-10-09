@@ -8,7 +8,7 @@ class User(models.Model):
     phones = models.CharField(max_length=254)
     created = models.DateField(auto_now_add=True)
     modified = models.DateField(auto_now=True)
-    last_login = models.CharField(max_length=254)
+    last_login = models.DateField(auto_now_add=True)
     token = models.CharField(max_length=254)
 
     def __str__(self):

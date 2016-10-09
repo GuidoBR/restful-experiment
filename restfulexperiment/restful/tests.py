@@ -57,4 +57,5 @@ class UserTests(APITestCase):
 
         self.assertEqual(User.objects.get().modified, today)
         self.assertEqual(User.objects.get().created, today)
+        self.assertEqual(User.objects.get().last_login, today)
 
