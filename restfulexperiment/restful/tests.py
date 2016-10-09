@@ -40,10 +40,46 @@ class UserTests(APITestCase):
         }
 
         today = datetime.date.today()
-        response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.client.post(url, data, format='json')
 
         self.assertEqual(User.objects.get().modified, today)
         self.assertEqual(User.objects.get().created, today)
         self.assertEqual(User.objects.get().last_login, today)
+
+    def test_created_user_has_token(self):
+        """
+        Ensure we can create a new user object, and that it has the same created and
+        modified date.
+        """
+        url = reverse('user')
+        data = {
+        "name": "Joao da Silva",
+        "email": "joao@silva.org",
+        "password": "hunter2",
+        }
+
+        today = datetime.date.today()
+        self.client.post(url, data, format='json')
+
+        self.assertNotEqual(User.objects.get().token, '')
+
+
+    def test_cant_create_two_users_with_same_email(self):
+        url = reverse('user')
+        user1 = {
+        "name": "Joao da Silva",
+        "email": "joao@silva.org",
+        "password": "hunter2",
+        }
+
+        user2 = {
+        "name": "Joao da Silva",
+        "email": "joao@silva.org",
+        "password": "hunter2",
+        }
+
+        self.client.post(url, user1, format='json')
+        response = self.client.post(url, user2, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
 
