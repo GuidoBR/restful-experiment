@@ -44,6 +44,7 @@ $ python manage.py runserver
 Run the project's tests.
 
 ```
+$ python manage.py test
 ```
 
 ## License
