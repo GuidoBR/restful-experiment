@@ -16,12 +16,13 @@ class User(models.Model):
     def __str__(self):
         return "{} - {}".format(self.name, self.email)
 
-    def save(self, *args, **kwargs):
-        self.username = self.email
-
+    def generate_token(self):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
         payload = jwt_payload_handler(self)
-        self.token = jwt_encode_handler(payload)
+        return jwt_encode_handler(payload)
+
+    def save(self, *args, **kwargs):
+        self.username = self.email
+        self.token = self.generate_token()
         super().save(*args, **kwargs)
