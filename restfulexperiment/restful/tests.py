@@ -83,7 +83,6 @@ class UserTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
 
-
     def test_login_ok(self):
         url = reverse('user')
         user1 = {"name": "john", "email": "john@silva.org", "password": "hunter2"}
@@ -143,4 +142,3 @@ class UserTests(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(User.objects.get().name, 'Joao da Silva')
-

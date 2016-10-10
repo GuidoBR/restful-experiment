@@ -1,10 +1,11 @@
 # -*- coding: UTF-8 -*- 
 from django.db import models
+from django.core.exceptions import ValidationError
 from rest_framework_jwt.settings import api_settings
 
 class User(models.Model):
     name = models.CharField(max_length=254)
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=254)
     phones = models.CharField(max_length=254)
     created = models.DateField(auto_now_add=True)

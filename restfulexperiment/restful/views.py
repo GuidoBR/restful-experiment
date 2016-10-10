@@ -5,6 +5,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.exceptions import ValidationError
+from django.db.utils import IntegrityError
 
 from restfulexperiment.restful.models import User
 from restfulexperiment.restful.serializers import UserSerializer
@@ -40,7 +42,10 @@ def user_element(request, pk=None):
         }
         serializer = UserSerializer(data=data)
         if serializer.is_valid():
+            try:
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except IntegrityError:
+                return Response({'mensagem': 'E-mail ja existente'}, status=status.HTTP_406_NOT_ACCEPTABLE)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
