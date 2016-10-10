@@ -83,3 +83,34 @@ class UserTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
 
+
+    def test_login_ok(self):
+        url = reverse('user')
+        user1 = {"name": "john", "email": "john@silva.org", "password": "hunter2"}
+        self.client.post(url, user1, format='json')
+
+        url = reverse('login')
+        data = {'email': "john@silva.org", "password": "hunter2"}
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(User.objects.get().name, 'john')
+
+
+    def test_login_wrong_email(self):
+        url = reverse('login')
+        data = {'email': "wrong@email.org", "password": "wrongpassword"}
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.json, {'mensagem': "Usuário e/ou senha inválidos"})
+
+
+    def test_login_wrong_password(self):
+        url = reverse('user')
+        user1 = {"name": "john", "email": "john@silva.org", "password": "hunter2"}
+        self.client.post(url, user1, format='json')
+
+        url = reverse('login')
+        data = {'email': "john@silva.org", "password": "wrongpassword"}
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.json, {'mensagem': "Usuário e/ou senha inválidos"})
