@@ -114,3 +114,33 @@ class UserTests(APITestCase):
         response = self.client.get(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.json, {'mensagem': "Usuário e/ou senha inválidos"})
+
+
+    def test_get_user_without_token(self):
+        url = reverse('user')
+        data = {
+        "name": "Joao da Silva",
+        "email": "joao@silva.org",
+        "password": "hunter2",
+        }
+        self.client.post(url, data, format='json')
+
+        url = reverse('user', kwargs={'pk': 1})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+    def test_get_user(self):
+        url = reverse('user')
+        data = {
+        "name": "Joao da Silva",
+        "email": "joao@silva.org",
+        "password": "hunter2",
+        }
+        self.client.post(url, data, format='json')
+
+        url = reverse('user', kwargs={'pk': 1})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(User.objects.get().name, 'Joao da Silva')
+
