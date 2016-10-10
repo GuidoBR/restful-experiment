@@ -84,6 +84,9 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
 
     def test_login_ok(self):
+        '''
+	TODO Incomplete
+	'''
         url = reverse('user')
         user1 = {"name": "john", "email": "john@silva.org", "password": "hunter2"}
         self.client.post(url, user1, format='json')
@@ -96,6 +99,9 @@ class UserTests(APITestCase):
 
 
     def test_login_wrong_email(self):
+        '''
+	TODO Incomplete
+	'''
         url = reverse('login')
         data = {'email': "wrong@email.org", "password": "wrongpassword"}
         response = self.client.get(url, data, format='json')
@@ -104,18 +110,24 @@ class UserTests(APITestCase):
 
 
     def test_login_wrong_password(self):
+        '''
+	TODO Incomplete
+	'''
         url = reverse('user')
         user1 = {"name": "john", "email": "john@silva.org", "password": "hunter2"}
         self.client.post(url, user1, format='json')
 
         url = reverse('login')
         data = {'email': "john@silva.org", "password": "wrongpassword"}
-        response = self.client.get(url, data, format='json')
+        response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.json, {'mensagem': "Usuário e/ou senha inválidos"})
 
 
     def test_get_user_without_token(self):
+        '''
+	TODO Incomplete
+	'''
         url = reverse('user')
         data = {
         "name": "Joao da Silva",
@@ -125,11 +137,14 @@ class UserTests(APITestCase):
         self.client.post(url, data, format='json')
 
         url = reverse('user', kwargs={'pk': 1})
-        response = self.client.get(url)
+        response = self.client.post(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
     def test_get_user(self):
+        '''
+	TODO Incomplete
+	'''
         url = reverse('user')
         data = {
         "name": "Joao da Silva",

@@ -7,9 +7,28 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
+import jwt
+from rest_framework_jwt.utils import jwt_payload_handler
 
 from restfulexperiment.restful.models import User
 from restfulexperiment.restful.serializers import UserSerializer
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny, ))
+def login(request):
+    '''
+    TODO Incomplete
+    '''
+    if request.method == 'POST':
+        email = request.data.get('email')
+        password = request.data.get('password')
+        user = User.objects.get(email=email, password=password)
+        payload = jwt_payload_handler(user)
+        token = jwt.encode(payload, settings.SECRET_KEY)
+        return Response(serializer.data)
+
+    return Response({'mensagem': 'todo'}, status=404)
 
 
 @api_view(['GET'])
